@@ -10,8 +10,9 @@ gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
 
 group :development, :test do
-  gem 'sqlite3', '1.3.7'
+  # gem 'sqlite3', '1.3.7' use this if not running postgres locally
   gem 'rspec-rails', '2.13.1'
+  gem 'passenger', '4.0.19'
   # The following optional lines are part of the advanced setup.
   # gem 'guard-rspec', '2.5.0'
   # gem 'spork-rails', github: 'sporkrb/spork-rails'
@@ -27,7 +28,7 @@ group :test do
   gem 'database_cleaner', github: 'bmabey/database_cleaner'
 
   # Uncomment this line on OS X.
-  # gem 'growl', '1.0.3'
+  gem 'growl', '1.0.3'
 
   # Uncomment these lines on Linux.
   # gem 'libnotify', '0.8.0'
@@ -49,6 +50,6 @@ group :doc do
 end
 
 group :production do
-  gem 'pg', '0.15.1'
+  gem 'pg'
   gem 'rails_12factor', '0.0.2'
 end
