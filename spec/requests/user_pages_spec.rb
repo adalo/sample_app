@@ -71,7 +71,7 @@ describe "UserPages" do
       it { should have_link('change', href: 'http://gravatar.com/emails') }
     end
 
-    describe "with valid information" do
+    describe "with invalid information" do
       before { click_button "Save changes" }
 
       it { should have_content('error') }
