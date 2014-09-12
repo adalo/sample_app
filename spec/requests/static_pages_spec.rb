@@ -31,6 +31,25 @@ describe "Static pages" do
           expect(page).to have_selector("li##{item.id}", text: item.content)
         end
       end
+
+      it { should have_content("microposts") } # only checking the pluralized here since I think we can assume if .pluralize is working then the singular of same should also work.
+
+      describe "pagination" do
+
+      before do 
+        30.times { FactoryGirl.create(:micropost, user: user) }
+        visit root_path
+      end
+
+      it { should have_selector('div.pagination') }
+
+      it "should list each feed_item" do
+        user.feed.paginate(page: 1).each do |fi|
+          expect(page).to have_selector('li', text: fi.content)
+        end
+      end
+    end
+    
     end
   end
 

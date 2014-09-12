@@ -77,6 +77,23 @@ describe "UserPages" do
       it { should have_content(m1.content) }
       it { should have_content(m2.content) }
       it { should have_content(user.microposts.count) }
+      it { should have_content("Microposts") } # only checking the pluralized here since I think we can assume if .pluralize is working then the singular of same should also work.
+    end
+
+    describe "pagination" do
+
+      before do 
+        30.times { FactoryGirl.create(:micropost, user: user) }
+        visit user_path(user)
+      end
+
+      it { should have_selector('div.pagination') }
+
+      it "should list each micropost" do
+        user.microposts.paginate(page: 1).each do |m|
+          expect(page).to have_selector('li', text: m.content)
+        end
+      end
     end
   end
 

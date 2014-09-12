@@ -14,6 +14,7 @@ group :development, :test do
   # gem 'sqlite3', '1.3.7' use this if not running postgres locally
   gem 'rspec-rails', '2.13.1'
   gem 'passenger', '4.0.19'
+  gem 'launchy'
   # The following optional lines are part of the advanced setup.
   # gem 'guard-rspec', '2.5.0'
   # gem 'spork-rails', github: 'sporkrb/spork-rails'
