@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Micropost do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryGirl.create(:user, username: "example") }
   before { @micropost = user.microposts.build(content: "Lorem ipsum") }
 
   subject { @micropost }
@@ -28,23 +28,24 @@ describe Micropost do
     it { should_not be_valid }
   end
 
+
   describe "@replies" do
-    before do
-      @recipient = FactoryGirl.create(:user, username: "bieber")
-      @other_user = FactoryGirl.create(:user)
-      @reply = FactoryGirl.create(:micropost, user: user, content: "@bieber is the best")
-      @recipient.follow!(user)
-      @other_user.follow!(user)
+    let(:sender) { FactoryGirl.create(:user) }
+    let(:other_user) { FactoryGirl.create(:user) }
+    let(:reply) { Micropost.create(user: sender, content: "@example should see this but other_user should not") }
+    before do      
+        user.follow!(sender)
+        other_user.follow!(sender)
     end
 
     describe "should appear in recipient's feed" do
-      subject { @recipient.feed }
-      it { should include(@reply) }
+      subject { user.feed }
+      it { should include(reply) }
     end
 
     describe "should not appear in other users feeds" do
-      subject { @other_user.feed }
-      it { should_not include(@reply) }
+      subject { other_user.feed }
+      it { should_not include(reply) }
     end
   end
 end

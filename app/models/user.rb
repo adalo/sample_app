@@ -24,7 +24,9 @@ class User < ActiveRecord::Base
 	end
 
 	def feed
+		# build a feed of all posts from users followed by the user
 		Micropost.from_users_followed_by(self)
+
 	end
 
 	def following?(other_user)
